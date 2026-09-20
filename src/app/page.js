@@ -45,9 +45,9 @@ const reelGroups = [
   {
     title: "Fitness & Sports",
     items: [
-      { src: "/portfolio/fitness-1.mp4", label: "Fitness Reel 1" },
-      { src: "/portfolio/fitness-2.mp4", label: "Fitness Reel 2" },
-      { src: "/portfolio/sports-1.mp4", label: "Sports Reel" },
+      { src: "/F1.mp4", label: "Fitness Reel 1" },
+      { src: "/F2.mp4", label: "Fitness Reel 2" },
+      { src: "/S3.mp4", label: "Sports Reel" },
     ],
   },
   {
