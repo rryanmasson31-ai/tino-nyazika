@@ -10,6 +10,10 @@ export const metadata = {
   twitter: { card: "summary_large_image" },
 };
 
+function isVideo(src) {
+  return /\.(mp4|webm|mov|m4v)$/i.test(src);
+}
+
 /* ---------- EDIT THESE ---------- */
 const UPWORK_URL = "https://www.upwork.com/freelancers/YOUR-PROFILE"; // <- replace
 // Images live in /public/portfolio/  (filenames below)
@@ -33,38 +37,49 @@ const reelGroups = [
   {
     title: "Personal Branding",
     items: [
-      { src: "/portfolio/personal-branding-1.png", label: "Personal branding Reel 1" },
-      { src: "/portfolio/personal-branding-2.png", label: "Personal branding Reel 2" },
-      { src: "/portfolio/personal-branding-3.png", label: "Personal branding Reel 3" },
+      { src: "/Green and Yellow Modern Business Services Promotional Ads Mobile VIdeo.mp4", label: "Personal branding Reel 1" },
+      { src: "/2.mp4", label: "Personal branding Reel 2" },
+      { src: "/3.mp4", label: "Personal branding Reel 3" },
     ],
   },
   {
     title: "Fitness & Sports",
     items: [
-      { src: "/portfolio/fitness-1.png", label: "Fitness Reel 1" },
-      { src: "/portfolio/fitness-2.png", label: "Fitness Reel 2" },
-      { src: "/portfolio/sports-1.png", label: "Sports Reel" },
+      { src: "/portfolio/fitness-1.mp4", label: "Fitness Reel 1" },
+      { src: "/portfolio/fitness-2.mp4", label: "Fitness Reel 2" },
+      { src: "/portfolio/sports-1.mp4", label: "Sports Reel" },
     ],
   },
   {
     title: "Real Estate Flip & Fix Investing",
     items: [
-      { src: "/portfolio/real-estate-reel-1.png", label: "Flip & fix Reel 1" },
-      { src: "/portfolio/real-estate-reel-2.png", label: "Flip & fix Reel 2" },
-      { src: "/portfolio/real-estate-reel-3.png", label: "Flip & fix Reel 3" },
+      { src: "/portfolio/real-estate-reel-1.mp4", label: "Flip & fix Reel 1" },
+      { src: "/portfolio/real-estate-reel-2.mp4", label: "Flip & fix Reel 2" },
+      { src: "/portfolio/real-estate-reel-3.mp4", label: "Flip & fix Reel 3" },
     ],
   },
 ];
 
-const instagramCarousel = Array.from({ length: 9 }, (_, i) => ({
-  src: `/portfolio/carousel-${i + 1}.png`,
-  label: `Instagram carousel slide ${i + 1}`,
-}));
+// const instagramCarousel = Array.from({ length: 9 }, (_, i) => ({
+//   src: `1.PNG-${i + 1}.png`,
+//   label: `Instagram carousel slide ${i + 1}`,
+// }));
+const instagramCarousel = [
+  { src: "/1.PNG", label: "Instagram carousel slide 1" },
+  { src: "/2.PNG", label: "Instagram carousel slide 2" },
+  { src: "/3.PNG", label: "Instagram carousel slide 3" },
+  { src: "/4.PNG", label: "Instagram carousel slide 4" },
+  { src: "/7.PNG", label: "Instagram carousel slide 5" },
+  { src: "/3.PNG", label: "Instagram carousel slide 6" },
+  { src: "/7.PNG", label: "Instagram carousel slide 7" },
+  { src: "/7.PNG", label: "Instagram carousel slide 8" },
+  { src: "/4.PNG", label: "Instagram carousel slide 9" },
+];
 
 const realEstateGraphics = [
-  { src: "/portfolio/re-graphic-1.png", label: "Closing announcement graphic" },
-  { src: "/portfolio/re-graphic-2.png", label: "Property listing graphic" },
-  { src: "/portfolio/re-graphic-3.png", label: "Property teaser graphic" },
+  { src: "/_Tino's Portfolio 2.2. Final (1).png", label: "Closing announcement graphic" },
+  { src: "/_Tino's Portfolio 2.2. Final (2).png", label: "Property listing graphic" },
+  { src: "/_Tino's Portfolio 2.2. Final(3).png", label: "Property teaser graphic" },
 ];
 
 const infoCarousels = [
@@ -82,7 +97,7 @@ const steps = [
       "We begin with a focused conversation to understand your business, goals, audience and brand voice.",
       "I then shape a clear brand direction so your content feels consistent, recognisable and true to you.",
     ],
-    image: { src: "/portfolio/process-1-reach.png", label: "Reach +162% and Qualified Profile Visits +138% analytics" },
+    image: { src: "/_Tino's Portfolio 2.2. Final (13).png", label: "Reach +162% and Qualified Profile Visits +138% analytics" },
   },
   {
     number: "02",
@@ -91,7 +106,7 @@ const steps = [
       "I audit your current presence, research your industry and analyse what is already working for your competitors.",
       "This reveals the content gaps and opportunities your brand can own.",
     ],
-    image: { src: "/portfolio/process-2-audit.png", label: "Competitor audit table" },
+    image: { src: "/_Tino's Portfolio 2.2. Final (12).png", label: "Competitor audit table" },
   },
   {
     number: "03",
@@ -100,18 +115,18 @@ const steps = [
       "I create a custom content plan built around your vision, audience and business goals.",
       "You receive clear content pillars and a structured calendar for approval before anything is produced.",
     ],
-    image: { src: "/portfolio/process-3-calendar.png", label: "Content calendar spreadsheet" },
+    image: { src: "/_Tino's Portfolio 2.2. Final (11).png", label: "Content calendar spreadsheet" },
   },
-  {
-    // TODO: your slides only showed 3 steps — replace with your real step 4
-    number: "04",
-    title: "Content Production & Growth Reporting",
-    points: [
-      "I create, schedule and publish your content, keeping your involvement minimal.",
-      "I track results and keep refining the system around what performs best.",
-    ],
-    image: { src: "/portfolio/process-4.png", label: "Step 4 visual" },
-  },
+  // {
+  //   // TODO: your slides only showed 3 steps — replace with your real step 4
+  //   number: "04",
+  //   title: "Content Production & Growth Reporting",
+  //   points: [
+  //     "I create, schedule and publish your content, keeping your involvement minimal.",
+  //     "I track results and keep refining the system around what performs best.",
+  //   ],
+  //   image: { src: "/_Tino's Portfolio 2.2. Final (10).png", label: "Step 4 visual" },
+  // },
 ];
 
 const proof = [
@@ -122,11 +137,11 @@ const proof = [
 ];
 
 const resultShots = [
-  { src: "/portfolio/results-ig-1.png", label: "Instagram: 521,598 views in 90 days", caption: "Instagram · 521,598 views" },
-  { src: "/portfolio/results-ig-2.png", label: "Instagram: 906,221 views in 30 days", caption: "Instagram · 906,221 views" },
-  { src: "/portfolio/results-fb.png", label: "Facebook: 322,876 views, 752,911 video views, 2,483 profile activity", caption: "Facebook · 752,911 video views" },
-  { src: "/portfolio/results-tt-1.png", label: "TikTok: 354,984 video views", caption: "TikTok · 354,984 views" },
-  { src: "/portfolio/results-tt-2.png", label: "TikTok: 633,390 video views", caption: "TikTok · 633,390 views" },
+  { src: "/_Tino's Portfolio 2.2. Final (5).png", label: "Instagram: 521,598 views in 90 days", caption: "Instagram · 521,598 views" },
+  { src: "/_Tino's Portfolio 2.2. Final (21).png", label: "Instagram: 906,221 views in 30 days", caption: "Instagram · 906,221 views" },
+  { src: "/_Tino's Portfolio 2.2. Final (3).png", label: "Facebook: 322,876 views, 752,911 video views, 2,483 profile activity", caption: "Facebook · 752,911 video views" },
+  { src: "/_Tino's Portfolio 2.2. Final (4).png", label: "TikTok: 354,984 video views", caption: "TikTok · 354,984 views" },
+  { src: "/_Tino's Portfolio 2.2. Final (22).png", label: "TikTok: 633,390 video views", caption: "TikTok · 633,390 views" },
 ];
 
 const reviews = [
@@ -159,12 +174,30 @@ const reviews = [
 
 /* ---------- building blocks ---------- */
 function Media({ src, label, ratio = "ratio-post", play = false, caption }) {
+  const video = isVideo(src);
+
   return (
     <figure className="pf-fig">
       <div className={`pf-media ${ratio}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={label} loading="lazy" decoding="async" />
-        {play && <span className="pf-play" aria-hidden="true">▶</span>}
+        {video ? (
+          <video
+            className="pf-video"
+            src={src}
+            muted
+            loop
+            autoPlay
+            playsInline
+            preload="metadata"
+            aria-label={label}
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={src} alt={label} loading="lazy" decoding="async" />
+        )}
+
+        {play && !video && (
+          <span className="pf-play" aria-hidden="true">▶</span>
+        )}
       </div>
       {caption && <figcaption className="pf-caption">{caption}</figcaption>}
     </figure>
@@ -226,7 +259,7 @@ export default function Index() {
             <div className="phone-brand">Tino</div>
             <div className="phone-portrait">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="phone-img" src="/portfolio/tino-portrait.png" alt="Portrait of Tino Nyazika" />
+              <img className="phone-img" src="/_Tino's Portfolio 2.2. Final.png" alt="Portrait of Tino Nyazika" />
             </div>
             <div className="phone-message">
               <strong>Tino Nyazika</strong>
@@ -416,302 +449,3 @@ export default function Index() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-// export const metadata = {
-//   title: "Tino Nyazika | Growth Social Media Manager",
-//   description:
-//     "Tino Nyazika builds organic content systems that turn attention into measurable growth for ambitious brands.",
-//   openGraph: {
-//     title: "Tino Nyazika | Growth Social Media Manager",
-//     description: "Strategy first, content second, growth always.",
-//     type: "website",
-//   },
-//   twitter: {
-//     card: "summary_large_image",
-//   },
-// };
-
-// const process = [
-//   {
-//     number: "01",
-//     title: "Strategy",
-//     copy: "I get clear on your brand, your audience, and what growth needs to look like before anything gets made.",
-//   },
-//   {
-//     number: "02",
-//     title: "Content",
-//     copy: "I build a content system, not one-off posts: repeatable formats, a clear cadence, and a voice people remember.",
-//   },
-//   {
-//     number: "03",
-//     title: "Growth",
-//     copy: "I track what turns attention into real outcomes, then keep refining the system around what works.",
-//   },
-// ];
-
-// const services = [
-//   ["Social strategy", "A focused roadmap built around your audience, goals, and strongest opportunities."],
-//   ["Content systems", "Repeatable formats and workflows that make consistent, high-quality publishing possible."],
-//   ["Growth & community", "Organic growth shaped by useful content and genuine audience relationships."],
-//   ["Analytics & iteration", "Clear reporting that connects content performance to the outcomes that matter."],
-// ];
-
-// const proof = [
-//   ["3.2M+", "Organic reach"],
-//   ["40+", "Brands supported"],
-//   ["6×", "Average engagement lift"],
-//   ["12", "Markets reached"],
-// ];
-
-// function ImagePlaceholder({ label, tall = false }) {
-//   return (
-//     <div
-//       className={`image-placeholder ${tall ? "image-placeholder-tall" : ""}`}
-//       role="img"
-//       aria-label={label}
-//     >
-//       <span>{label}</span>
-//       <small>Image placeholder</small>
-//     </div>
-//   );
-// }
-
-// export default function Index() {
-//   return (
-//     <main className="min-h-screen overflow-hidden bg-background text-foreground">
-//       <nav className="site-nav" aria-label="Main navigation">
-//         <div className="shell nav-inner">
-//           <a href="#top" className="wordmark">Tino Nyazika</a>
-//           <div className="nav-links">
-//             <a href="#work">Work</a>
-//             <a href="#process">Process</a>
-//             <a href="#about">About</a>
-//             <a href="#contact">Contact</a>
-//           </div>
-//           <a
-//             className="button button-light nav-cta"
-//             href="mailto:hello@tinonyazika.com?subject=Book%20a%20call"
-//           >
-//             Book a call
-//           </a>
-//         </div>
-//       </nav>
-
-//       <section id="top" className="hero">
-//         <div className="hero-ghost" aria-hidden="true">Tino Nyazika</div>
-//         <div className="hero-copy">
-//           <h1>
-//             Strategy first.<br />
-//             Content second.<br />
-//             <em>Growth always.</em>
-//           </h1>
-//           <p>
-//             I help brands grow organically by building content systems that turn
-//             attention into results — not just impressions.
-//           </p>
-//           <div className="button-row">
-//             <a
-//               className="button button-primary"
-//               href="mailto:hello@tinonyazika.com?subject=Book%20a%20call"
-//             >
-//               Book a call
-//             </a>
-//             <a className="button button-outline" href="#work">See the work</a>
-//           </div>
-//         </div>
-//         <div className="hero-visual" aria-label="Layered content system preview">
-//           <div className="phone-shell phone-left" aria-hidden="true">
-//             <div className="phone-island" />
-//             <div className="mini-screen copy-screen">
-//               <small>Strategy</small>
-//               <strong>Attention needs a destination.</strong>
-//               <span>Start with the outcome.</span>
-//             </div>
-//           </div>
-//           <div className="phone-shell phone-center">
-//             <div className="phone-island" />
-//             <div className="phone-status"><span>9:41</span><span>•••</span></div>
-//             <div className="phone-brand">Tino</div>
-//             <div className="phone-portrait">
-//               <ImagePlaceholder label="Portrait of Tino" tall />
-//             </div>
-//             <div className="phone-message">
-//               <strong>Build a system.<br />Then let it compound.</strong>
-//               <span>Content with a job to do.</span>
-//             </div>
-//           </div>
-//           <div className="phone-shell phone-right" aria-hidden="true">
-//             <div className="phone-island" />
-//             <div className="mini-screen metric-screen">
-//               <small>Organic growth</small>
-//               <strong>3.2M</strong>
-//               <span>Verified result placeholder</span>
-//               <div className="metric-bars">
-//                 <i /><i /><i /><i /><i />
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-
-//       <section id="about" className="section about-band">
-//         <div className="shell about-grid">
-//           <div className="about-photo">
-//             <ImagePlaceholder label="Tino at work" tall />
-//           </div>
-//           <div className="about-copy">
-//             <p className="section-kicker">A little about me</p>
-//             <h2>Content that earns attention — and knows what to do with it.</h2>
-//             <p>
-//               Hey, I'm Tino — a growth social media manager and content creator. I
-//               help brands grow organically by building content systems that
-//               actually convert attention into results.
-//             </p>
-//             <p className="supporting-copy">
-//               My approach is systems-driven, not trend-led. Every idea has a role,
-//               every format has a purpose, and every result teaches us what to do
-//               next.
-//             </p>
-//           </div>
-//         </div>
-//       </section>
-
-//       <section id="process" className="section shell">
-//         <div className="section-heading">
-//           <p className="section-kicker">How it works</p>
-//           <h2>A clear system for sustainable growth.</h2>
-//         </div>
-//         <div className="process-grid">
-//           {process.map((item) => (
-//             <article className="process-card" key={item.number}>
-//               <div className="card-glow" aria-hidden="true" />
-//               <div className="process-top">
-//                 <span className="step-number">{item.number}</span>
-//                 <span className="process-mark">Tino</span>
-//               </div>
-//               <div>
-//                 <h3>{item.title}</h3>
-//                 <p>{item.copy}</p>
-//               </div>
-//             </article>
-//           ))}
-//         </div>
-//       </section>
-
-//       <section id="work" className="section services-band">
-//         <div className="shell">
-//           <div className="section-heading split-heading">
-//             <div>
-//               <p className="section-kicker">What I do</p>
-//               <h2>Built for momentum,<br />not content volume.</h2>
-//             </div>
-//             <p>
-//               I bring the strategy, structure, and feedback loop brands need to
-//               make organic social compound over time.
-//             </p>
-//           </div>
-//           <div className="services-grid">
-//             {services.map(([title, copy]) => (
-//               <article className="service-card" key={title}>
-//                 <h3>{title}</h3>
-//                 <p>{copy}</p>
-//               </article>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       <section className="section shell proof-section">
-//         <div className="section-heading">
-//           <p className="section-kicker">Results</p>
-//           <h2>Attention is only useful when it moves something.</h2>
-//           <p className="placeholder-note">
-//             Placeholder figures — replace with Tino's verified results.
-//           </p>
-//         </div>
-//         <div className="proof-grid">
-//           {proof.map(([value, label]) => (
-//             <div className="proof-item" key={label}>
-//               <strong>{value}</strong>
-//               <span>{label}</span>
-//             </div>
-//           ))}
-//         </div>
-//         <div className="logo-strip" aria-label="Client name placeholders">
-//           <span>Client name</span>
-//           <span>Brand partner</span>
-//           <span>Client name</span>
-//           <span>Brand partner</span>
-//         </div>
-//       </section>
-
-//       <section className="section shell">
-//         <div className="testimonial-card">
-//           <span className="quote-mark">"</span>
-//           <blockquote>
-//             "Add a short client quote here that shows how Tino's strategy changed
-//             the way the brand creates content — and the results it produced."
-//           </blockquote>
-//           <div className="testimonial-meta">
-//             <div>
-//               <strong>Client name</strong>
-//               <span>Role, company</span>
-//             </div>
-//             <small>Testimonial placeholder</small>
-//           </div>
-//         </div>
-//       </section>
-
-//       <section id="contact" className="section closing-band">
-//         <div className="shell closing-inner">
-//           <div>
-//             <h2>Let's build your<br /><em>growth engine.</em></h2>
-//             <p>
-//               If you're ready for a clearer, more consistent way to grow, let's
-//               talk.
-//             </p>
-//           </div>
-//           <div className="closing-actions">
-//             <a href="mailto:hello@tinonyazika.com">hello@tinonyazika.com</a>
-//             <a
-//               className="button button-primary"
-//               href="mailto:hello@tinonyazika.com?subject=Book%20a%20call"
-//             >
-//               Book a call
-//             </a>
-//           </div>
-//         </div>
-//       </section>
-
-//       <footer className="site-footer">
-//         <div className="shell footer-top">
-//           <div>
-//             <a href="#top" className="footer-name">Tino Nyazika</a>
-//             <p>Strategy first, content second, growth always.</p>
-//           </div>
-//           <div className="social-links">
-//             <a href="#instagram">Instagram</a>
-//             <a href="#tiktok">TikTok</a>
-//             <a href="#linkedin">LinkedIn</a>
-//             <a href="#x">X</a>
-//           </div>
-//           <a href="mailto:hello@tinonyazika.com">hello@tinonyazika.com</a>
-//         </div>
-//         <div className="shell footer-bottom">
-//           <span>© 2026 Tino Nyazika</span>
-//           <span>Built for organic growth.</span>
-//         </div>
-//       </footer>
-//     </main>
-//   );
-// }
