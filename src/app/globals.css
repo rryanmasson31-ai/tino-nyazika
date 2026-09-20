@@ -231,7 +231,7 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
 .ratio-shot { aspect-ratio: 3 / 4; }
 .pf-caption { margin-top: 10px; color: var(--muted-foreground); font-size: .78rem; }
 
-/* clickable video thumbnail tile */
+/* in-place play/pause video tile */
 .pf-video-thumb {
   position: absolute;
   inset: 0;
@@ -270,7 +270,7 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   font-size: 1rem;
   transform: translate(-50%, -50%);
   backdrop-filter: blur(6px);
-  transition: transform 180ms ease, background 180ms ease;
+  transition: transform 180ms ease, background 180ms ease, opacity 220ms ease;
 }
 
 .pf-video-thumb:hover .pf-play {
@@ -278,7 +278,47 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   background: rgb(0 0 0 / 75%);
 }
 
-/* lightbox */
+.pf-video-thumb .pf-play.is-playing {
+  padding-left: 0;
+  font-size: 0.8rem;
+  opacity: 0.4;
+  background: rgb(0 0 0 / 40%);
+}
+
+.pf-video-thumb:hover .pf-play.is-playing {
+  opacity: 0.85;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* clickable image tile (zoom on click) */
+.pf-image-thumb {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.pf-image-thumb > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pf-image-thumb:hover > img {
+  transform: scale(1.04);
+}
+
+/* image lightbox */
 .pf-lightbox {
   position: fixed;
   inset: 0;
@@ -290,16 +330,19 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   animation: pf-fade-in 220ms ease;
+  cursor: zoom-out;
 }
 
-.pf-lightbox-video {
-  max-width: min(92vw, 480px);
+.pf-lightbox-image {
+  max-width: min(92vw, 1100px);
   max-height: 88vh;
   width: auto;
   height: auto;
-  border-radius: 20px;
+  border-radius: 16px;
   background: #000;
   box-shadow: 0 40px 90px rgb(0 0 0 / 55%);
+  cursor: default;
+  animation: pf-zoom-in 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .pf-lightbox-close {
@@ -319,6 +362,7 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   cursor: pointer;
   backdrop-filter: blur(8px);
   transition: background 180ms ease;
+  z-index: 2;
 }
 
 .pf-lightbox-close:hover {
@@ -328,6 +372,11 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
 @keyframes pf-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+@keyframes pf-zoom-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* help cards */
@@ -387,24 +436,10 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   .help-card, .review-card { padding: 22px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .pf-lightbox { animation: none; }
-  .pf-video-thumb .pf-play { transition: none; }
-}
-
-/* center the max-width grids inside the shell */
-.reel-grid,
-.post-grid,
-.ig-grid {
-  margin-inline: auto;
-}
-
-
 /* ==========================================================
    MOTION SYSTEM
    ========================================================== */
 
-/* ---------- keyframes ---------- */
 @keyframes pf-slide-down {
   from { opacity: 0; transform: translateY(-14px); }
   to   { opacity: 1; transform: none; }
@@ -420,12 +455,6 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   50%      { box-shadow: 0 0 0 14px oklch(0.31 0.018 78 / 0%); }
 }
 
-@keyframes pf-underline-in {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-
-/* ---------- scroll reveal base ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -441,7 +470,6 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   transform: none;
 }
 
-/* staggered children inside a .reveal-group */
 .reveal-group > * {
   opacity: 0;
   transform: translateY(22px);
@@ -466,17 +494,14 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
 .reveal-group.is-visible > *:nth-child(9)  { transition-delay: 720ms; }
 .reveal-group.is-visible > *:nth-child(n+10) { transition-delay: 810ms; }
 
-/* ---------- nav entrance ---------- */
 .site-nav {
   animation: pf-slide-down 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ---------- hero ghost drift ---------- */
 .hero-ghost {
   animation: pf-ghost-drift 16s ease-in-out infinite alternate;
 }
 
-/* ---------- hover system ---------- */
 .help-card,
 .review-card,
 .step-card,
@@ -524,12 +549,10 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   box-shadow: 0 14px 30px -14px oklch(0.3 0.01 75 / 22%);
 }
 
-/* process step number pulse on hover */
 .step-card:hover .step-number {
   animation: pf-pulse-glow 1.6s ease-out infinite;
 }
 
-/* work-title underline draws in when revealed */
 .work-title::after {
   transform: scaleX(0);
   transform-origin: left;
@@ -537,16 +560,14 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
 }
 
 .reveal.is-visible .work-title::after,
-.work-group.is-visible .work-title::after {
+.reveal-group.is-visible .work-title::after {
   transform: scaleX(1);
 }
 
-/* proof numbers lift on hover */
 .proof-item:hover strong {
   transform: translateY(-4px);
 }
 
-/* ---------- reduce motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-group > * {
@@ -577,4 +598,16 @@ blockquote { position: relative; max-width: 820px; margin: 0 0 54px; font-size: 
   .step-card:hover .step-number {
     animation: none;
   }
+  .pf-video-thumb .pf-play { transition: none; }
+  .pf-lightbox,
+  .pf-lightbox-image { animation: none; }
+  .pf-image-thumb > img { transition: none; }
+  .pf-image-thumb:hover > img { transform: none; }
+}
+
+/* center the max-width grids inside the shell */
+.reel-grid,
+.post-grid,
+.ig-grid {
+  margin-inline: auto;
 }

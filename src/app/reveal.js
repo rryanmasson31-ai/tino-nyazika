@@ -16,8 +16,6 @@ export function Reveal({
     const el = ref.current;
     if (!el) return;
 
-    // If the element is already in view on mount (above the fold), show it
-    // immediately without waiting for scroll.
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.9) {
       setVisible(true);

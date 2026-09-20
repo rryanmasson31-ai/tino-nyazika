@@ -1,19 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function isVideo(src) {
   return /\.(mp4|webm|mov|m4v)$/i.test(src);
 }
 
-export function Media({ src, label, ratio = "ratio-post", caption, poster }) {
+export function Media({
+  src,
+  label,
+  ratio = "ratio-post",
+  caption,
+  poster,
+  zoomable = false,
+}) {
   const video = isVideo(src);
-  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [zoomed, setZoomed] = useState(false);
+
+  const toggle = () => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.paused) {
+      el.muted = false;
+      el.play();
+      setPlaying(true);
+    } else {
+      el.pause();
+      setPlaying(false);
+    }
+  };
 
   useEffect(() => {
-    if (!open) return;
+    if (!zoomed) return;
     const onKey = (e) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") setZoomed(false);
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -21,7 +43,7 @@ export function Media({ src, label, ratio = "ratio-post", caption, poster }) {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [zoomed]);
 
   return (
     <>
@@ -31,19 +53,37 @@ export function Media({ src, label, ratio = "ratio-post", caption, poster }) {
             <button
               type="button"
               className="pf-video-thumb"
-              onClick={() => setOpen(true)}
-              aria-label={`Play ${label}`}
+              onClick={toggle}
+              aria-label={playing ? `Pause ${label}` : `Play ${label}`}
+              aria-pressed={playing}
             >
               <video
+                ref={ref}
                 className="pf-video"
-                src={`${src}#t=0.5`}
+                src={src}
                 poster={poster}
                 muted
                 playsInline
+                loop
                 preload="metadata"
-                aria-hidden="true"
+                onEnded={() => setPlaying(false)}
               />
-              <span className="pf-play" aria-hidden="true">▶</span>
+              <span
+                className={`pf-play ${playing ? "is-playing" : ""}`}
+                aria-hidden="true"
+              >
+                {playing ? "❚❚" : "▶"}
+              </span>
+            </button>
+          ) : zoomable ? (
+            <button
+              type="button"
+              className="pf-image-thumb"
+              onClick={() => setZoomed(true)}
+              aria-label={`View ${label}`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt={label} loading="lazy" decoding="async" />
             </button>
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
@@ -53,10 +93,10 @@ export function Media({ src, label, ratio = "ratio-post", caption, poster }) {
         {caption && <figcaption className="pf-caption">{caption}</figcaption>}
       </figure>
 
-      {open && (
+      {zoomed && (
         <div
           className="pf-lightbox"
-          onClick={() => setOpen(false)}
+          onClick={() => setZoomed(false)}
           role="dialog"
           aria-modal="true"
           aria-label={label}
@@ -66,18 +106,17 @@ export function Media({ src, label, ratio = "ratio-post", caption, poster }) {
             className="pf-lightbox-close"
             onClick={(e) => {
               e.stopPropagation();
-              setOpen(false);
+              setZoomed(false);
             }}
-            aria-label="Close video"
+            aria-label="Close image"
           >
             ✕
           </button>
-          <video
-            className="pf-lightbox-video"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="pf-lightbox-image"
             src={src}
-            controls
-            autoPlay
-            playsInline
+            alt={label}
             onClick={(e) => e.stopPropagation()}
           />
         </div>
