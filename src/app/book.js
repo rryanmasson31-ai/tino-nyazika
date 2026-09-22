@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Calendar, Check, Clock } from "lucide-react";
 
 /* ---------- CONFIG ---------- */
-const WORK_DAYS = [1, 2, 3, 4, 5]; // Mon–Fri (0 = Sun)
+const WORK_DAYS = [1, 2, 3, 4, 5]; // Mon–Fri
 const WORK_START = 9;              // 9:00
-const WORK_END = 17;               // 17:00 (last slot 16:30)
+const WORK_END = 17;               // 17:00
 const SLOT_MINUTES = 30;
 const MEETING_LENGTH_MIN = 30;
 const CONTACT_EMAIL = "hello@tinonyazika.com";
@@ -115,6 +115,7 @@ export function Book() {
   const [form, setForm] = useState({ name: "", email: "", notes: "", website: "" });
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [meetLink, setMeetLink] = useState(null);
 
   const cells = useMemo(() => buildMonthGrid(view.year, view.month), [view]);
   const slots = useMemo(() => (selectedDate ? buildSlots(selectedDate) : []), [selectedDate]);
@@ -191,10 +192,13 @@ export function Book() {
         }),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Booking failed. Please try again.");
       }
+
+      if (data.meetLink) setMeetLink(data.meetLink);
       setStep("done");
     } catch (err) {
       setError(err.message || "Something went wrong.");
@@ -289,7 +293,8 @@ export function Book() {
                   <div className="book-slots">
                     {slots.map((s) => {
                       const disabled = slotDisabled(s);
-                      const isSel = sameDay(s, selectedTime) && selectedTime?.getTime() === s.getTime();
+                      const isSel =
+                        sameDay(s, selectedTime) && selectedTime?.getTime() === s.getTime();
                       return (
                         <button
                           type="button"
@@ -376,7 +381,13 @@ export function Book() {
               autoComplete="off"
               value={form.website}
               onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
-              style={{ position: "absolute", left: "-10000px", width: 1, height: 1, opacity: 0 }}
+              style={{
+                position: "absolute",
+                left: "-10000px",
+                width: 1,
+                height: 1,
+                opacity: 0,
+              }}
             />
 
             {error && <p className="book-error">{error}</p>}
@@ -407,14 +418,31 @@ export function Book() {
               is on its way to <strong>{form.email}</strong>.
             </p>
 
+            {meetLink && (
+              <p className="book-fineprint">
+                Google Meet link: <a href={meetLink}>{meetLink}</a>
+              </p>
+            )}
+
             <div className="book-success-actions">
+              {meetLink && (
+                <a
+                  className="button button-primary"
+                  href={meetLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Join Google Meet
+                </a>
+              )}
               <a
-                className="button button-primary"
+                className="button button-outline"
                 href={gcalUrl({
                   start: selectedTime,
                   end: endTime,
                   title: "Meeting with Tino Nyazika",
                   details: form.notes || "Booked via tinonyazika.com",
+                  location: meetLink || "",
                 })}
                 target="_blank"
                 rel="noopener noreferrer"
